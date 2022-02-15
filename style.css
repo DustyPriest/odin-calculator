@@ -1,0 +1,33 @@
+/* ------ RESET ------ */
+
+/* ------ CUSTOM PROPOERTIES ------ */
+:root {
+}
+/* ------ MAIN LAYOUT ------ */
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  font-size: 2rem;
+  margin: 1rem;
+}
+
+/* ------ GRIDS ------ */
+
+.numpad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 300px;
+}
+
+.numpad-grid * {
+  border: 2px solid black;
+  text-align: center;
+}
