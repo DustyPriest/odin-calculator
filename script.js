@@ -3,13 +3,38 @@
 
 /* ------ GLOBAL VARIABLES ------ */
 
+const DEFAULT_DISPLAY = '0';
+
+let mainDisplay = DEFAULT_DISPLAY;
+let subDisplay = '';
+
 /* ------ ELEMENT SELECTORS ------ */
+
+const mainDisplayEl = document.querySelector('.main-display');
+const subDuisplayEl = document.querySelector('.sub-display');
+const digits = document.querySelectorAll('.digit');
 
 /* ------ EVENT LISTENERS ------ */
 
+digits.forEach((digit) => {
+  digit.addEventListener('click', storeDisplay);
+});
+
 /* ------ LISTENER FUNCTIONS------ */
 
+function storeDisplay(e) {
+  mainDisplay === '0'
+    ? (mainDisplay = e.target.textContent)
+    : (mainDisplay = mainDisplay + e.target.textContent);
+
+  updateMainDisplay();
+}
+
 /* ------ ADDITIONAL FUNCTIONS ------ */
+
+const updateMainDisplay = () => {
+  mainDisplayEl.textContent = mainDisplay;
+};
 
 const add = (a, b) => {
   return a + b;
@@ -48,3 +73,5 @@ const operate = (operator, a, b) => {
       return 0;
   }
 };
+
+updateMainDisplay();

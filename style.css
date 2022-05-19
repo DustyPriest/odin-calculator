@@ -1,8 +1,9 @@
 /* ------ RESET ------ */
 
 /* ------ CUSTOM PROPOERTIES ------ */
-:root {
-}
+
+/* TODO: Implement custom propoerties for colours, gaps?, outlines / borders */
+
 /* ------ MAIN LAYOUT ------ */
 
 body {
@@ -15,9 +16,12 @@ body {
 }
 
 .header {
+  /* TODO: Fill proper header: Title, mode selection, light/darkmode */
   font-size: 2rem;
   margin: 1rem;
 }
+
+/* TODO: Footer */
 
 /* ------ GRIDS ------ */
 
@@ -51,10 +55,29 @@ body {
 .display-container {
   border: 2px solid orangered;
   grid-column: 1 / span 5;
+  padding: 1rem;
 }
 
+.main-display,
+.sub-display {
+  width: 100%;
+  background: orange;
+  text-align: right;
+}
+
+.main-display {
+  height: 70%;
+}
+
+.sub-display {
+  height: 30%;
+}
+
+/* TODO: Style buttons by section and purpose */
 .btn {
   padding: 0.5rem 1rem;
   border: 2px solid black;
   text-align: center;
 }
+
+/* TODO: outline & hover & focus effects */

@@ -11,19 +11,24 @@
   <body>
     <div class="header">Calculator</div>
     <div class="main-grid">
-      <div class="display-container"></div>
+      <div class="display-container">
+        <div class="sub-display">test</div>
+        <div class="main-display"></div>
+      </div>
       <div class="numpad-grid">
-        <div id="num7" class="btn nunmpad">7</div>
-        <div id="num8" class="btn nunmpad">8</div>
-        <div id="num9" class="btn nunmpad">9</div>
-        <div id="num4" class="btn nunmpad">4</div>
-        <div id="num5" class="btn nunmpad">5</div>
-        <div id="num6" class="btn nunmpad">6</div>
-        <div id="num1" class="btn nunmpad">1</div>
-        <div id="num2" class="btn nunmpad">2</div>
-        <div id="num3" class="btn nunmpad">3</div>
+        <div id="num7" class="btn numpad digit">7</div>
+        <div id="num8" class="btn numpad digit">8</div>
+        <div id="num9" class="btn numpad digit">9</div>
+        <div id="num4" class="btn numpad digit">4</div>
+        <div id="num5" class="btn numpad digit">5</div>
+        <div id="num6" class="btn numpad digit">6</div>
+        <div id="num1" class="btn numpad digit">1</div>
+        <div id="num2" class="btn numpad digit">2</div>
+        <div id="num3" class="btn numpad digit">3</div>
+        <!-- TODO: Move clear & equals elsewhere. replace with decimal point and
+        backspace -->
         <div id="clear" class="btn numpad numpad-alt">C</div>
-        <div id="num0" class="btn nunmpad">0</div>
+        <div id="num0" class="btn numpad digit">0</div>
         <div id="equals" class="btn numpad numpad-alt">=</div>
       </div>
       <div class="operator-grid">
