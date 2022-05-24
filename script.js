@@ -5,13 +5,14 @@
 
 const DEFAULT_DISPLAY = '0';
 
-let mainDisplay = [DEFAULT_DISPLAY];
-let subDisplay = [];
+let mainDisplay = DEFAULT_DISPLAY;
+let equationDisplay = [];
+let equation = [];
 
 /* ------ ELEMENT SELECTORS ------ */
 
 const mainDisplayEl = document.querySelector('.main-display');
-const subDisplayEl = document.querySelector('.sub-display');
+const equationDisplayEl = document.querySelector('.sub-display');
 const digits = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 
@@ -31,33 +32,45 @@ function inputDigit(e) {
   // replace default display
   // or begin new number
   // or add to current number
-  if (mainDisplay[mainDisplay.length - 1] === DEFAULT_DISPLAY)
-    mainDisplay[0] = e.target.textContent;
-  else if (isNaN(mainDisplay[mainDisplay.length - 1]))
-    mainDisplay.push(e.target.textContent);
-  else mainDisplay[mainDisplay.length - 1] += e.target.textContent;
+  // if (mainDisplay[mainDisplay.length - 1] === DEFAULT_DISPLAY)
+  //   mainDisplay[0] = e.target.textContent;
+  // else if (isNaN(mainDisplay[mainDisplay.length - 1]))
+  //   mainDisplay.push(e.target.textContent);
+  // else mainDisplay[mainDisplay.length - 1] += e.target.textContent;
+
+  if (mainDisplay === DEFAULT_DISPLAY || mainDisplay === '')
+    mainDisplay = e.target.textContent;
+  else mainDisplay += e.target.textContent;
 
   updateMainDisplay();
 }
 
 function inputOperator(e) {
+  // add main display
   // remove current operator if one already selected
   // insert 0 if necessary
   // insert new operator
-  if (isNaN(mainDisplay[mainDisplay.length - 1])) {
-    mainDisplay.pop();
-    if (mainDisplay.length === 0) mainDisplay.push('0');
+  // reset mainDisplay for next number
+  if (mainDisplay !== '') equation.push(mainDisplay);
+  if (isNaN(equation[equation.length - 1])) {
+    equation.pop();
+    if (equation.length === 0) equation.push('0');
   }
 
-  mainDisplay.push(e.target.textContent);
+  equation.push(e.target.textContent);
 
-  updateMainDisplay();
+  mainDisplay = '';
+  updateEquationDisplay();
 }
 
 /* ------ ADDITIONAL FUNCTIONS ------ */
 
 const updateMainDisplay = () => {
-  mainDisplayEl.textContent = mainDisplay.join(' ');
+  mainDisplayEl.textContent = mainDisplay;
+};
+
+const updateEquationDisplay = () => {
+  equationDisplayEl.textContent = equation.join(' ');
 };
 
 const add = (a, b) => {
