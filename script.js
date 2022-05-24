@@ -6,8 +6,10 @@
 const DEFAULT_DISPLAY = '0';
 
 let mainDisplay = DEFAULT_DISPLAY;
-let equationDisplay = [];
 let equation = [];
+let result;
+let errorOccurred = false;
+let equalsPressed = false;
 
 /* ------ ELEMENT SELECTORS ------ */
 
@@ -15,6 +17,7 @@ const mainDisplayEl = document.querySelector('.main-display');
 const equationDisplayEl = document.querySelector('.sub-display');
 const digits = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
+const equals = document.querySelector('#equals');
 
 /* ------ EVENT LISTENERS ------ */
 
@@ -26,17 +29,16 @@ operators.forEach((operator) => {
   operator.addEventListener('click', inputOperator);
 });
 
+equals.addEventListener('click', handleEquals);
+
 /* ------ LISTENER FUNCTIONS------ */
 
 function inputDigit(e) {
-  // replace default display
-  // or begin new number
+  // replace default display / begin new number
   // or add to current number
-  // if (mainDisplay[mainDisplay.length - 1] === DEFAULT_DISPLAY)
-  //   mainDisplay[0] = e.target.textContent;
-  // else if (isNaN(mainDisplay[mainDisplay.length - 1]))
-  //   mainDisplay.push(e.target.textContent);
-  // else mainDisplay[mainDisplay.length - 1] += e.target.textContent;
+  if (equalsPressed) {
+    return;
+  }
 
   if (mainDisplay === DEFAULT_DISPLAY || mainDisplay === '')
     mainDisplay = e.target.textContent;
@@ -46,12 +48,17 @@ function inputDigit(e) {
 }
 
 function inputOperator(e) {
-  // add main display
+  // add main display to equation
   // remove current operator if one already selected
   // insert 0 if necessary
   // insert new operator
   // reset mainDisplay for next number
+  if (equalsPressed) {
+    equalsPressed = false;
+  }
+
   if (mainDisplay !== '') equation.push(mainDisplay);
+
   if (isNaN(equation[equation.length - 1])) {
     equation.pop();
     if (equation.length === 0) equation.push('0');
@@ -63,7 +70,36 @@ function inputOperator(e) {
   updateEquationDisplay();
 }
 
-/* ------ ADDITIONAL FUNCTIONS ------ */
+function handleEquals(e) {
+  // to be run when = pressed
+  // if trailing operater, remove then assess
+  // if empty expression return nothing or display zero
+  // if divide by zero return error of some kind (perhaps check this during actual division step, so that entering decimals < 1 is not impeded)
+  // otherwise operate in correct order
+
+  inputOperator(e);
+  // if empty expression or solo number
+  if (equation.length !== 2) {
+    const ops = ['×', '÷', '+', '−'];
+
+    ops.forEach(operate);
+
+    if (errorOccurred) {
+      resetCalc();
+      errorOccurred = false;
+    } else {
+      result = equation[0];
+      resetCalc();
+
+      mainDisplay = result;
+      updateMainDisplay();
+    }
+  }
+
+  equalsPressed = true;
+}
+
+/* ------ FUNCTIONS ------ */
 
 const updateMainDisplay = () => {
   mainDisplayEl.textContent = mainDisplay;
@@ -73,42 +109,39 @@ const updateEquationDisplay = () => {
   equationDisplayEl.textContent = equation.join(' ');
 };
 
-const add = (a, b) => {
-  return a + b;
-};
+const operate = (op) => {
+  const regex = new RegExp(`\\${op}`); // double escape char required for regex special character +
+  while (regex.test(equation.join(''))) {
+    const index = equation.indexOf(op);
 
-const subtract = (a, b) => {
-  return a - b;
-};
-
-const multiply = (a, b) => {
-  return a * b;
-};
-
-const divide = (a, b) => {
-  // TODO: address dividing by 0
-  return a / b;
-};
-
-// FIXME: How should operate function work?
-// FIXME: is display update called within operate?
-const operate = (operator, a, b) => {
-  switch (operator) {
-    case '+':
-      return add(a, b);
-      break;
-    case '-':
-      return subtract(a, b);
-      break;
-    case '*':
-      return multiply(a, b);
-      break;
-    case '/':
-      return divide(a, b);
-      break;
-    default:
-      return 0;
+    let stepResult;
+    switch (op) {
+      case '×':
+        stepResult = +equation[index - 1] * +equation[index + 1];
+        break;
+      case '÷':
+        if (equation[index + 1] === '0') {
+          mainDisplayEl.textContent = 'Cannot divide by 0';
+          errorOccurred = true;
+          return; // not the best efficient as will still assess addition and subtraction afterwards
+        }
+        stepResult = +equation[index - 1] / +equation[index + 1];
+        break;
+      case '+':
+        stepResult = +equation[index - 1] + +equation[index + 1];
+        break;
+      case '−':
+        stepResult = +equation[index - 1] - +equation[index + 1];
+        break;
+    }
+    // replace used numbers with stepResult
+    equation.splice(index - 1, 3, stepResult);
   }
+};
+
+const resetCalc = () => {
+  equation = [];
+  mainDisplay = '';
 };
 
 updateMainDisplay();
