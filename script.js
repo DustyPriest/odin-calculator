@@ -118,6 +118,7 @@ function handleEquals(e) {
 
 function clearCalculator() {
   resetCalc();
+  equation = [];
   updateMainDisplay();
   updateEquationDisplay();
   equalsPressed = false;
@@ -137,16 +138,38 @@ function inputDecimal() {
   updateMainDisplay();
 }
 
-function handleBackspace() {}
+function handleBackspace() {
+  // return if displaying result or nothing to delete
+  if (equalsPressed || (mainDisplay === '' && equation.length === 0)) {
+    return;
+  }
+
+  if (mainDisplay !== '') {
+    //edit current number
+    mainDisplay = mainDisplay.slice(0, -1);
+  } else if (isNaN(equation[equation.length - 1])) {
+    //remove operator
+    equation.pop();
+  } else {
+    // edit previous number from equation
+    mainDisplay = `${equation[equation.length - 1]}`.slice(0, -1);
+    equation.pop();
+  }
+
+  updateEquationDisplay();
+  updateMainDisplay();
+}
 
 /* ------ GENERAL FUNCTIONS ------ */
 
 const updateMainDisplay = () => {
   mainDisplayEl.textContent = mainDisplay;
+  // mainDisplay === '' ? DEFAULT_DISPLAY : mainDisplay;
 };
 
 const updateEquationDisplay = () => {
-  equationDisplayEl.textContent = equation.join(' ');
+  equationDisplayEl.textContent =
+    equation.join(' ') === '0' ? '' : equation.join(' ');
 };
 
 const operate = (op) => {
