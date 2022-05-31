@@ -18,6 +18,7 @@ const equationDisplayEl = document.querySelector('.sub-display');
 const digits = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const equals = document.querySelector('#equals');
+const clear = document.querySelector('#clear');
 
 /* ------ EVENT LISTENERS ------ */
 
@@ -30,6 +31,8 @@ operators.forEach((operator) => {
 });
 
 equals.addEventListener('click', handleEquals);
+
+clear.addEventListener('click', clearCalculator);
 
 /* ------ LISTENER FUNCTIONS------ */
 
@@ -99,7 +102,14 @@ function handleEquals(e) {
   equalsPressed = true;
 }
 
-/* ------ FUNCTIONS ------ */
+function clearCalculator() {
+  resetCalc();
+  updateMainDisplay();
+  updateEquationDisplay();
+  equalsPressed = false;
+}
+
+/* ------ GENERAL FUNCTIONS ------ */
 
 const updateMainDisplay = () => {
   mainDisplayEl.textContent = mainDisplay;
@@ -141,7 +151,7 @@ const operate = (op) => {
 
 const resetCalc = () => {
   equation = [];
-  mainDisplay = '';
+  mainDisplay = DEFAULT_DISPLAY;
 };
 
 updateMainDisplay();
