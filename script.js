@@ -1,6 +1,8 @@
 // Script for calculator webapp create as part of The Odin project course
 // Author: DustyPriest
 
+// TODO: keyboard support
+
 /* ------ GLOBAL VARIABLES ------ */
 
 const DEFAULT_DISPLAY = '0';

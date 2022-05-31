@@ -1,8 +1,9 @@
 /* ------ RESET ------ */
+a {
+  text-decoration: none;
+}
 
 /* ------ CUSTOM PROPOERTIES ------ */
-
-/* TODO: Implement custom propoerties for colours, gaps?, outlines / borders */
 
 :root {
   --clr-background-600: #eeeef8;
@@ -41,7 +42,11 @@ body {
   margin: 1rem;
 }
 
-/* TODO: Footer */
+#footer {
+  position: fixed;
+  bottom: 0;
+  padding: 0.5rem;
+}
 
 /* ------ GRIDS ------ */
 
