@@ -10,6 +10,7 @@ let equation = [];
 let result;
 let errorOccurred = false;
 let equalsPressed = false;
+let decimalPresent = false;
 
 /* ------ ELEMENT SELECTORS ------ */
 
@@ -19,6 +20,7 @@ const digits = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const equals = document.querySelector('#equals');
 const clear = document.querySelector('#clear');
+const decimal = document.querySelector('#decimal');
 
 /* ------ EVENT LISTENERS ------ */
 
@@ -33,6 +35,8 @@ operators.forEach((operator) => {
 equals.addEventListener('click', handleEquals);
 
 clear.addEventListener('click', clearCalculator);
+
+decimal.addEventListener('click', inputDecimal);
 
 /* ------ LISTENER FUNCTIONS------ */
 
@@ -108,6 +112,8 @@ function clearCalculator() {
   updateEquationDisplay();
   equalsPressed = false;
 }
+
+function inputDecimal(e) {}
 
 /* ------ GENERAL FUNCTIONS ------ */
 
