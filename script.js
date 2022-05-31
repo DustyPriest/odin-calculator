@@ -50,6 +50,12 @@ function inputDigit(e) {
     return;
   }
 
+  // maybe have display error system to prevent bad inputs?
+  // if (mainDisplay.length === 26) {
+  //   displayError('Maximum number length reached');
+  //   return;
+  // }
+
   if (mainDisplay === DEFAULT_DISPLAY || mainDisplay === '')
     mainDisplay = e.target.textContent;
   else mainDisplay += e.target.textContent;
@@ -65,6 +71,7 @@ function inputOperator(e) {
   // reset mainDisplay for next number
   if (equalsPressed) {
     equalsPressed = false;
+    toggleDisableButtons();
   }
 
   if (mainDisplay !== '') equation.push(mainDisplay);
@@ -114,6 +121,7 @@ function handleEquals(e) {
   }
 
   equalsPressed = true;
+  toggleDisableButtons();
 }
 
 function clearCalculator() {
@@ -122,6 +130,7 @@ function clearCalculator() {
   updateMainDisplay();
   updateEquationDisplay();
   equalsPressed = false;
+  enableButtons();
 }
 
 function inputDecimal() {
@@ -205,6 +214,24 @@ const operate = (op) => {
 const resetCalc = () => {
   equation = [];
   mainDisplay = DEFAULT_DISPLAY;
+};
+
+const toggleDisableButtons = () => {
+  if (backspace.classList.contains('disabled')) {
+    backspace.classList.remove('disabled');
+    decimal.classList.remove('disabled');
+    digits.forEach((digit) => digit.classList.remove('disabled'));
+  } else {
+    backspace.classList.add('disabled');
+    decimal.classList.add('disabled');
+    digits.forEach((digit) => digit.classList.add('disabled'));
+  }
+};
+
+const enableButtons = () => {
+  backspace.classList.remove('disabled');
+  decimal.classList.remove('disabled');
+  digits.forEach((digit) => digit.classList.remove('disabled'));
 };
 
 updateMainDisplay();

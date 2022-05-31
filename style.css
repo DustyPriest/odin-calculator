@@ -4,6 +4,26 @@
 
 /* TODO: Implement custom propoerties for colours, gaps?, outlines / borders */
 
+:root {
+  --clr-background-600: #eeeef8;
+  --clr-background-300: #f6f8f9;
+
+  --clr-accent: #ff9500;
+  --clr-accent-hvr: hsl(35, 100%, 45%);
+
+  --clr-btn: #e9f0f4;
+  --clr-btn-hvr: hsl(202, 33%, 84%);
+  --clr-btn-pos: #2ec973;
+  --clr-btn-pos-hvr: hsl(147, 63%, 43%);
+  --clr-btn-neg: #f8eced;
+  --clr-btn-neg-hvr: hsl(355, 46%, 90%);
+
+  --clr-text-900: #2d323a;
+  --clr-text-600: #5c6269;
+  --clr-text-300: #929599;
+  --clr-text-warning: #f6444e;
+}
+
 /* ------ MAIN LAYOUT ------ */
 
 body {
@@ -13,10 +33,10 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: var(--clr-background-600);
 }
 
 .header {
-  /* TODO: Fill proper header: Title, mode selection, light/darkmode */
   font-size: 2rem;
   margin: 1rem;
 }
@@ -26,9 +46,16 @@ body {
 /* ------ GRIDS ------ */
 
 .main-grid {
+  width: 500px;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--clr-background-300);
+  font-weight: 900;
+  color: var(--clr-text-600);
+
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   gap: 2rem;
 }
 
@@ -36,48 +63,104 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  width: 300px;
-  grid-column: 1 / span 3;
-  grid-row: 2 / span 2;
+  grid-column: 1 / span 4;
+  grid-row: 4 / span 3;
 }
 
 .operator-grid {
   display: grid;
   grid-template-rows: repeat(4, 1fr);
   gap: 1rem;
-  /* width: 150px; */
-  grid-column: 4 / span 2;
-  grid-row: 2 / span 2;
+  grid-column: 5 / span 2;
+  grid-row: 4 / span 3;
+}
+
+#clear {
+  grid-column: 1 / span 4;
+}
+
+#backspace {
+  grid-column: 5 / span 2;
 }
 
 /* ------ GRID ITEMS ------ */
 
 .display-container {
-  border: 2px solid orangered;
-  grid-column: 1 / span 5;
+  box-sizing: border-box;
+  min-height: 110px;
+  grid-column: 1 / span 6;
+  grid-row: 1 / span 2;
   padding: 1rem;
-}
-
-.main-display,
-.sub-display {
-  width: 100%;
-  background: orange;
+  word-wrap: break-word;
+  word-break: break-all;
   text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
 
 .main-display {
-  height: 70%;
+  font-size: 2rem;
+  color: var(--clr-text-900);
 }
 
 .sub-display {
-  height: 30%;
+  font-size: 1.4rem;
+  min-height: 2rem;
+  color: var(--clr-text-300);
+  /* margin-bottom: 1rem;
+  border-bottom: 2px solid black; */
 }
 
-/* TODO: Style buttons by section and purpose */
 .btn {
   padding: 0.5rem 1rem;
-  border: 2px solid black;
-  text-align: center;
+  border-radius: 1rem;
+  background-color: var(--clr-btn);
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
 }
 
-/* TODO: outline & hover & focus effects */
+.btn.disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn.operator {
+  background-color: var(--clr-accent);
+  color: white;
+}
+
+#equals {
+  background-color: var(--clr-btn-pos);
+  color: white;
+}
+
+#clear {
+  background-color: var(--clr-btn-neg);
+  color: var(--clr-text-warning);
+}
+
+.btn:not(.disabled):hover,
+.btn:not(.disabled):focus {
+  background-color: var(--clr-btn-hvr);
+}
+
+.btn.operator:hover,
+.btn.operator:focus {
+  background-color: var(--clr-accent-hvr);
+}
+
+#equals:hover,
+#equals:focus {
+  background-color: var(--clr-btn-pos-hvr);
+}
+
+#clear:hover,
+#clear:focus {
+  background-color: var(--clr-btn-neg-hvr);
+}
