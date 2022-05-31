@@ -4,6 +4,7 @@
 /* ------ GLOBAL VARIABLES ------ */
 
 const DEFAULT_DISPLAY = '0';
+const MAX_DECIMALS = 10;
 
 let mainDisplay = DEFAULT_DISPLAY;
 let equation = [];
@@ -19,6 +20,7 @@ const digits = document.querySelectorAll('.digit');
 const operators = document.querySelectorAll('.operator');
 const equals = document.querySelector('#equals');
 const clear = document.querySelector('#clear');
+const backspace = document.querySelector('#backspace');
 const decimal = document.querySelector('#decimal');
 
 /* ------ EVENT LISTENERS ------ */
@@ -36,6 +38,8 @@ equals.addEventListener('click', handleEquals);
 clear.addEventListener('click', clearCalculator);
 
 decimal.addEventListener('click', inputDecimal);
+
+backspace.addEventListener('click', handleBackspace);
 
 /* ------ LISTENER FUNCTIONS------ */
 
@@ -99,7 +103,9 @@ function handleEquals(e) {
 
       // round to 10 decimal places
       if (result % 1 !== 0) {
-        result = +(Math.round(result + 'e+10') + 'e-10');
+        result = +(
+          Math.round(result + `e+${MAX_DECIMALS}`) + `e-${MAX_DECIMALS}`
+        );
       }
 
       mainDisplay = result;
@@ -117,7 +123,7 @@ function clearCalculator() {
   equalsPressed = false;
 }
 
-function inputDecimal(e) {
+function inputDecimal() {
   if (equalsPressed || mainDisplay.includes('.')) {
     return;
   }
@@ -130,6 +136,8 @@ function inputDecimal(e) {
 
   updateMainDisplay();
 }
+
+function handleBackspace() {}
 
 /* ------ GENERAL FUNCTIONS ------ */
 
