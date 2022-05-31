@@ -10,7 +10,6 @@ let equation = [];
 let result;
 let errorOccurred = false;
 let equalsPressed = false;
-let decimalPresent = false;
 
 /* ------ ELEMENT SELECTORS ------ */
 
@@ -98,6 +97,11 @@ function handleEquals(e) {
       result = equation[0];
       resetCalc();
 
+      // round to 10 decimal places
+      if (result % 1 !== 0) {
+        result = +(Math.round(result + 'e+10') + 'e-10');
+      }
+
       mainDisplay = result;
       updateMainDisplay();
     }
@@ -113,7 +117,19 @@ function clearCalculator() {
   equalsPressed = false;
 }
 
-function inputDecimal(e) {}
+function inputDecimal(e) {
+  if (equalsPressed || mainDisplay.includes('.')) {
+    return;
+  }
+
+  if (mainDisplay === '') {
+    mainDisplay = '0.';
+  } else {
+    mainDisplay += '.';
+  }
+
+  updateMainDisplay();
+}
 
 /* ------ GENERAL FUNCTIONS ------ */
 
